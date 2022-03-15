@@ -149,7 +149,7 @@ func main() {
 	writer, err := mmdbwriter.New(
 		mmdbwriter.Options{
 			DatabaseType: databaseType,
-			RecordSize:   24,
+			RecordSize:   32,
 		},
 	)
 	if err != nil {

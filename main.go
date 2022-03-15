@@ -129,9 +129,9 @@ func init() {
 	flag.Parse()
 }
 
-func scan(srcFile string) []string {
+func scan(input string) []string {
 	var ipTxtList []string
-	fh, err := os.Open(srcFile)
+	fh, err := os.Open(input)
 	if err != nil {
 		log.Fatalf("fail to open %s\n", err)
 		os.Exit(-1)
@@ -162,8 +162,10 @@ func main() {
 		err = writer.Insert(ip, cnRecord)
 		if err != nil {
 			log.Fatalf("fail to insert to writer %v\n", err)
-		}
+		}z
 	}
+	log.Infof("%s cnt: %d", "cn", len(ipList))
+
 	for _, country := range extraCountries {
 		ipTxtList := scan(fmt.Sprintf("./%s/ip.txt", country))
 		ipList := parseCIDRs(ipTxtList)
@@ -185,5 +187,4 @@ func main() {
 	if err != nil {
 		log.Fatalf("fail to write to file %v\n", err)
 	}
-
 }

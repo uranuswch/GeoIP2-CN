@@ -167,7 +167,7 @@ func main() {
 		}
 	}
 	for _, country := range extraCountries {
-		ipTxtList := scan(fmt.Sprintf("%s/%s.txt", srcDir, country))
+		ipTxtList := scan(fmt.Sprintf("%s/%s/ip.txt", srcDir, country))
 		ipList := parseCIDRs(ipTxtList)
 		for _, ip := range ipList {
 			err = writer.Insert(ip, extraCountriesRecords[country])

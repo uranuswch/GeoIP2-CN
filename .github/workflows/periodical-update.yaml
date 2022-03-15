@@ -41,11 +41,16 @@ jobs:
       run: |
         curl -LR -o dist/ipip_net.txt "https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt"
         curl -LR -o dist/chunzhen.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/CN.txt"
-        curl -LR -o dist/hongkong.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/HK.txt"
-        curl -LR -o dist/usa.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/US.txt"
-        curl -LR -o dist/japan.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/JP.txt"
-        curl -LR -o dist/korea.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/KR.txt"
-        curl -LR -o dist/taiwan.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/TW.txt"
+        mkdir -p dist/hongkong
+        curl -LR -o dist/hongkong/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/HK.txt"
+        mkdir -p dist/usa
+        curl -LR -o dist/usa/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/US.txt"
+        mkdir -p dist/japan
+        curl -LR -o dist/japan/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/JP.txt"
+        mkdir -p dist/korea
+        curl -LR -o dist/korea/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/KR.txt"
+        mkdir -p dist/taiwan
+        curl -LR -o dist/taiwan/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/TW.txt"
 
     - name: Merge and IP lists and remove duplicates
       run: |
@@ -89,3 +94,4 @@ jobs:
 
     - name: Purge CDN Cache
       run: curl ${{ secrets.CDN_URL }}
+      https://cdn.jsdelivr.net/gh/uranuswch/GeoIP2-CN@release/Country.mmdb

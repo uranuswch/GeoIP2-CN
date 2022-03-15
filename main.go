@@ -162,7 +162,7 @@ func main() {
 		err = writer.Insert(ip, cnRecord)
 		if err != nil {
 			log.Fatalf("fail to insert to writer %v\n", err)
-		}z
+		}
 	}
 	log.Infof("%s cnt: %d", "cn", len(ipList))
 

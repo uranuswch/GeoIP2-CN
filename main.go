@@ -17,18 +17,18 @@ var (
 	databaseType string
 	cnRecord     = mmdbtype.Map{
 		"country": mmdbtype.Map{
-			"geoname_id":           mmdbtype.Uint32(1814991),
+			"geoname_id":           mmdbtype.Uint32(6252001),
 			"is_in_european_union": mmdbtype.Bool(false),
-			"iso_code":             mmdbtype.String("CN"),
+			"iso_code":             mmdbtype.String("US"),
 			"names": mmdbtype.Map{
-				"de":    mmdbtype.String("China"),
-				"en":    mmdbtype.String("China"),
-				"es":    mmdbtype.String("China"),
-				"fr":    mmdbtype.String("Chine"),
-				"ja":    mmdbtype.String("中国"),
-				"pt-BR": mmdbtype.String("China"),
-				"ru":    mmdbtype.String("Китай"),
-				"zh-CN": mmdbtype.String("中国"),
+				"de":    mmdbtype.String("Vereinigte Staaten von Amerika"),
+				"en":    mmdbtype.String("United States of America"),
+				"es":    mmdbtype.String("Estados Unidos de América"),
+				"fr":    mmdbtype.String("États-Unis d'Amérique"),
+				"ja":    mmdbtype.String("アメリカ合衆国"),
+				"pt-BR": mmdbtype.String("Estados Unidos da América"),
+				"ru":    mmdbtype.String("Соединенные Штаты Америки"),
+				"zh-CN": mmdbtype.String("美国"),
 			},
 		},
 	}
@@ -146,46 +146,25 @@ func scan(srcFile string) []string {
 }
 
 func main() {
-	outFh, err := os.Create(dstFile)
+	writer, err := mmdbwriter.New(
+		mmdbwriter.Options{
+			DatabaseType: databaseType,
+			RecordSize:   24,
+		},
+	)
 	if err != nil {
-		log.Fatalf("fail to create output file %v\n", err)
+		log.Fatalf("fail to new writer %v\n", err)
 	}
 
-	// writer, err := mmdbwriter.New(
-	// 	mmdbwriter.Options{
-	// 		DatabaseType: databaseType,
-	// 		RecordSize:   24,
-	// 	},
-	// )
-	// if err != nil {
-	// 	log.Fatalf("fail to new writer %v\n", err)
-	// }
-	//
-	// ipTxtList := scan(srcFile)
-	// ipList := parseCIDRs(ipTxtList)
-	// for _, ip := range ipList {
-	// 	err = writer.Insert(ip, cnRecord)
-	// 	if err != nil {
-	// 		log.Fatalf("fail to insert to writer %v\n", err)
-	// 	}
-	// }
-	//
-	// _, err = writer.WriteTo(outFh)
-	// if err != nil {
-	// 	log.Fatalf("fail to write to file %v\n", err)
-	// }
-
-	for _, country := range extraCountries {
-		writer, err := mmdbwriter.New(
-			mmdbwriter.Options{
-				DatabaseType: databaseType,
-				RecordSize:   24,
-			},
-		)
+	ipTxtList := scan(srcFile)
+	ipList := parseCIDRs(ipTxtList)
+	for _, ip := range ipList {
+		err = writer.Insert(ip, cnRecord)
 		if err != nil {
-			log.Fatalf("fail to new writer %v\n", err)
+			log.Fatalf("fail to insert to writer %v\n", err)
 		}
-
+	}
+	for _, country := range extraCountries {
 		ipTxtList := scan(fmt.Sprintf("./%s/ip.txt", country))
 		ipList := parseCIDRs(ipTxtList)
 		for _, ip := range ipList {
@@ -194,11 +173,17 @@ func main() {
 				log.Fatalf("fail to insert to writer %v\n", err)
 			}
 		}
-
-		_, err = writer.WriteTo(outFh)
-		if err != nil {
-			log.Fatalf("fail to write to file %v\n", err)
-		}
 		log.Infof("%s cnt: %d", country, len(ipList))
 	}
+
+	outFh, err := os.Create(dstFile)
+	if err != nil {
+		log.Fatalf("fail to create output file %v\n", err)
+	}
+
+	_, err = writer.WriteTo(outFh)
+	if err != nil {
+		log.Fatalf("fail to write to file %v\n", err)
+	}
+
 }

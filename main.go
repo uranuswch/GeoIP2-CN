@@ -201,5 +201,4 @@ func main() {
 		}
 		log.Infof("%s cnt: %d", country, len(ipList))
 	}
-	outFh.Close()
 }

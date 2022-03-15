@@ -41,22 +41,27 @@ jobs:
       run: |
         curl -LR -o dist/ipip_net.txt "https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt"
         curl -LR -o dist/chunzhen.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/CN.txt"
+        curl -LR -o dist/hongkong.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/HK.txt"
+        curl -LR -o dist/usa.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/US.txt"
+        curl -LR -o dist/japan.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/JP.txt"
+        curl -LR -o dist/korea.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/KR.txt"
+        curl -LR -o dist/taiwan.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/TW.txt"
 
     - name: Merge and IP lists and remove duplicates
       run: |
         awk 'FNR==1{print ""}{print}' dist/*.txt > dist/merge.txt
-        awk '!seen[$0]++' dist/merge.txt > dist/CN-ip-cidr.txt
+        awk '!seen[$0]++' dist/merge.txt > dist/ip-cidr.txt
 
     - name: Generate GeoIP2 database
       run: |
         CURRENT_DIR=$(pwd)
         cd dist
-        ./ipip2mmdb -s ./CN-ip-cidr.txt -d Country.mmdb
+        ./ipip2mmdb -s ./ip-cidr.txt -d Country.mmdb
         cd $CURRENT_DIR
 
     - name: Push artifacts to release branch
       run: |
-        git config --local user.email "10215166+Hackl0us@users.noreply.github.com"
+        git config --local user.email "uranuswch@users.noreply.github.com"
         git config --local user.name "github-action[bot]"
 
         git fetch
@@ -65,11 +70,11 @@ jobs:
         git checkout --orphan release-orphan
         git rm -rf .
 
-        cp -rf dist/CN-ip-cidr.txt ./
+        cp -rf dist/ip-cidr.txt ./
         cp -rf dist/Country.mmdb ./
 
         git add Country.mmdb
-        git add CN-ip-cidr.txt
+        git add ip-cidr.txt
         git commit -am "Updated at $(date)"
 
         git branch -D release

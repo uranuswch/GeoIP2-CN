@@ -17,18 +17,18 @@ var (
 	databaseType string
 	cnRecord     = mmdbtype.Map{
 		"country": mmdbtype.Map{
-			"geoname_id":           mmdbtype.Uint32(6252001),
+			"geoname_id":           mmdbtype.Uint32(1814991),
 			"is_in_european_union": mmdbtype.Bool(false),
-			"iso_code":             mmdbtype.String("US"),
+			"iso_code":             mmdbtype.String("CN"),
 			"names": mmdbtype.Map{
-				"de":    mmdbtype.String("Vereinigte Staaten von Amerika"),
-				"en":    mmdbtype.String("United States of America"),
-				"es":    mmdbtype.String("Estados Unidos de América"),
-				"fr":    mmdbtype.String("États-Unis d'Amérique"),
-				"ja":    mmdbtype.String("アメリカ合衆国"),
-				"pt-BR": mmdbtype.String("Estados Unidos da América"),
-				"ru":    mmdbtype.String("Соединенные Штаты Америки"),
-				"zh-CN": mmdbtype.String("美国"),
+				"de":    mmdbtype.String("China"),
+				"en":    mmdbtype.String("China"),
+				"es":    mmdbtype.String("China"),
+				"fr":    mmdbtype.String("Chine"),
+				"ja":    mmdbtype.String("中国"),
+				"pt-BR": mmdbtype.String("China"),
+				"ru":    mmdbtype.String("Китай"),
+				"zh-CN": mmdbtype.String("中国"),
 			},
 		},
 	}

@@ -173,6 +173,7 @@ func main() {
 				log.Fatalf("fail to insert to writer %v\n", err)
 			}
 		}
+		log.Infof("%s cnt: %d", country, len(ipList))
 	}
 
 	outFh, err := os.Create(dstFile)

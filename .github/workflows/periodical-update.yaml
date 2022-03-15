@@ -94,4 +94,4 @@ jobs:
 
     - name: Purge CDN Cache
       run: curl ${{ secrets.CDN_URL }}
-      https://cdn.jsdelivr.net/gh/uranuswch/GeoIP2-CN@release/Country.mmdb
+ 

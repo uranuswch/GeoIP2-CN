@@ -94,4 +94,3 @@ jobs:
 
     - name: Purge CDN Cache
       run: curl ${{ secrets.CDN_URL }}
- 

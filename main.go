@@ -13,7 +13,6 @@ import (
 
 var (
 	srcFile      string
-	srcDir       string
 	dstFile      string
 	databaseType string
 	cnRecord     = mmdbtype.Map{
@@ -125,7 +124,6 @@ var (
 
 func init() {
 	flag.StringVar(&srcFile, "s", "ipip_cn.txt", "specify source ip list file")
-	flag.StringVar(&srcDir, "sd", "./dist", "specify extra country directory")
 	flag.StringVar(&dstFile, "d", "Country.mmdb", "specify destination mmdb file")
 	flag.StringVar(&databaseType, "t", "GeoIP2-Country", "specify MaxMind database type")
 	flag.Parse()
@@ -167,7 +165,7 @@ func main() {
 		}
 	}
 	for _, country := range extraCountries {
-		ipTxtList := scan(fmt.Sprintf("%s/%s/ip.txt", srcDir, country))
+		ipTxtList := scan(fmt.Sprintf("./%s/ip.txt", country))
 		ipList := parseCIDRs(ipTxtList)
 		for _, ip := range ipList {
 			err = writer.Insert(ip, extraCountriesRecords[country])

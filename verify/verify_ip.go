@@ -8,7 +8,7 @@ import (
 	"github.com/oschwald/geoip2-golang"
 )
 
-const DATA_FILE = "/Users/Bytedance/Downloads/Country-6.mmdb"
+const DATA_FILE = ".country.mmdb/GeoLite2-City.mmdb"
 
 func main() {
 	db, err := geoip2.Open(DATA_FILE)

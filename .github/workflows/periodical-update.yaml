@@ -51,6 +51,8 @@ jobs:
         curl -LR -o dist/korea/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/KR.txt"
         mkdir -p dist/taiwan
         curl -LR -o dist/taiwan/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/TW.txt"
+        mkdir -p dist/singapore
+        curl -LR -o dist/singapore/ip.txt "https://raw.githubusercontent.com/metowolf/iplist/master/data/country/SG.txt"        
 
     - name: Merge and IP lists and remove duplicates
       run: |
@@ -75,21 +77,9 @@ jobs:
         git checkout --orphan release-orphan
         git rm -rf .
 
-        cp -rf dist/ip-cidr.txt ./
         cp -rf dist/Country.mmdb ./
-        cp -rf dist/japan/ip.txt ./japan.txt
-        cp -rf dist/usa/ip.txt ./usa.txt
-        cp -rf dist/korea/ip.txt ./korea.txt
-        cp -rf dist/hongkong/ip.txt ./hongkong.txt
-        cp -rf dist/taiwan/ip.txt ./taiwan.txt
 
         git add Country.mmdb
-        git add ip-cidr.txt
-        git add japan.txt
-        git add usa.txt
-        git add korea.txt
-        git add hongkong.txt
-        git add taiwan.txt
         git commit -am "Updated at $(date)"
 
         git branch -D release
